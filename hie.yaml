@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "raytracing:lib"
+
+    - path: "./app/Main.hs"
+      component: "raytracing:exe:raytracing-exe"
+
+    - path: "./test"
+      component: "raytracing:test:raytracing-test"

@@ -1,21 +1,21 @@
 module Main where
 
+import Color (Color (Color))
 import Conduit
 import Data.ByteString (ByteString)
 import Data.ByteString.Char8 (pack)
 import Data.Conduit.Combinators (intersperse)
 import Data.Kind (Type)
+import Vec3 (V3 (V3))
 import Prelude hiding (concatMap)
 
 calcPixel ::
-  forall (n :: Type). (Integral n) => n -> n -> n -> n -> (n, n, n)
+  forall (n :: Type). (Integral n) => n -> n -> n -> n -> Color
 calcPixel i j width height =
   let r = fromIntegral i / (fromIntegral width - 1)
       g = fromIntegral j / (fromIntegral height - 1)
       b = 0.25
-      rgb = 255.999
-      round' = round . (*) rgb
-   in (round' r, round' g, round' b)
+   in Color $ V3 r g b
 
 content ::
   forall (m :: Type -> Type) (a :: Type).
@@ -29,11 +29,8 @@ content imgWidth imgHeight =
     | j <- [imgHeight -1, imgHeight -2 .. 0]
     , i <- [0 .. imgWidth -1]
     ]
-    .| mapC toLine
+    .| mapC show
     .| mapC pack
-  where
-    toLine :: (Int, Int, Int) -> String
-    toLine (ir, ig, ib) = unwords (fmap show [ir, ig, ib])
 
 p3 ::
   forall (m :: Type -> Type) (a :: Type).

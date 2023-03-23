@@ -1,161 +1,100 @@
-cabal-version: 1.12
+cabal-version:      3.0
+name:               raytracing
+version:            0.1.0.0
+description:
+  Please see the README on GitHub at <https://github.com/jeffhappily/raytracing#readme>
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
---
--- see: https://github.com/sol/hpack
-
-name:           raytracing
-version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/jeffhappily/raytracing#readme>
-homepage:       https://github.com/jeffhappily/raytracing#readme
-bug-reports:    https://github.com/jeffhappily/raytracing/issues
-author:         Cheah Jer Fei
-maintainer:     goodboy96@live.com.my
-copyright:      2021 Cheah Jer Fei
-license:        BSD3
-license-file:   LICENSE
-build-type:     Simple
+homepage:           https://github.com/jeffhappily/raytracing#readme
+bug-reports:        https://github.com/jeffhappily/raytracing/issues
+author:             Cheah Jer Fei
+maintainer:         goodboy96@live.com.my
+copyright:          2021 Cheah Jer Fei
+license:            BSD-3-Clause
+license-file:       LICENSE
+build-type:         Simple
 extra-source-files:
-    README.md
-    ChangeLog.md
+  ChangeLog.md
+  README.md
 
 source-repository head
-  type: git
+  type:     git
   location: https://github.com/jeffhappily/raytracing
 
-library
-  exposed-modules:
-      Color
-      Lib
-      Vec3
-  other-modules:
-      Paths_raytracing
-  hs-source-dirs:
-      src
+common common-lang
   default-extensions:
-      BangPatterns
-      BinaryLiterals
-      ConstraintKinds
-      DataKinds
-      DeriveFunctor
-      DeriveGeneric
-      DeriveTraversable
-      DerivingStrategies
-      DerivingVia
-      DuplicateRecordFields
-      EmptyCase
-      FlexibleContexts
-      FlexibleInstances
-      GADTs
-      GeneralizedNewtypeDeriving
-      HexFloatLiterals
-      InstanceSigs
-      ImportQualifiedPost
-      KindSignatures
-      LambdaCase
-      MultiParamTypeClasses
-      NumericUnderscores
-      OverloadedStrings
-      ScopedTypeVariables
-      StandaloneDeriving
-      TupleSections
-      TypeApplications
-      TypeOperators
-      TypeSynonymInstances
-      UndecidableInstances
+    BangPatterns
+    BinaryLiterals
+    ConstraintKinds
+    DataKinds
+    DeriveFunctor
+    DeriveGeneric
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    DuplicateRecordFields
+    EmptyCase
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    GeneralizedNewtypeDeriving
+    HexFloatLiterals
+    ImportQualifiedPost
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    NumericUnderscores
+    OverloadedStrings
+    ScopedTypeVariables
+    ScopedTypeVariables
+    StandaloneDeriving
+    TupleSections
+    TypeApplications
+    TypeOperators
+    TypeSynonymInstances
+    UndecidableInstances
+
+  default-language:   Haskell2010
+
+library
+  import:          common-lang
+  exposed-modules:
+    Lib
+    Ray
+    Vec3
+
+  other-modules:   Paths_raytracing
+  hs-source-dirs:  src
   build-depends:
-      base >=4.7 && <5
+    , base        >=4.7 && <5
     , bytestring
     , conduit
-  default-language: Haskell2010
+    , massiv
+    , semirings
 
 executable raytracing-exe
-  main-is: Main.hs
-  other-modules:
-      Paths_raytracing
-  hs-source-dirs:
-      app
-  default-extensions:
-      BangPatterns
-      BinaryLiterals
-      ConstraintKinds
-      DataKinds
-      DeriveFunctor
-      DeriveGeneric
-      DeriveTraversable
-      DerivingStrategies
-      DerivingVia
-      DuplicateRecordFields
-      EmptyCase
-      FlexibleContexts
-      FlexibleInstances
-      GADTs
-      GeneralizedNewtypeDeriving
-      HexFloatLiterals
-      InstanceSigs
-      ImportQualifiedPost
-      KindSignatures
-      LambdaCase
-      MultiParamTypeClasses
-      NumericUnderscores
-      OverloadedStrings
-      ScopedTypeVariables
-      StandaloneDeriving
-      TupleSections
-      TypeApplications
-      TypeOperators
-      TypeSynonymInstances
-      UndecidableInstances
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  import:         common-lang
+  main-is:        Main.hs
+  other-modules:  Paths_raytracing
+  hs-source-dirs: app
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+    , base        >=4.7 && <5
     , bytestring
     , conduit
+    , massiv
     , raytracing
-  default-language: Haskell2010
 
 test-suite raytracing-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
-  other-modules:
-      Paths_raytracing
-  hs-source-dirs:
-      test
-  default-extensions:
-      BangPatterns
-      BinaryLiterals
-      ConstraintKinds
-      DataKinds
-      DeriveFunctor
-      DeriveGeneric
-      DeriveTraversable
-      DerivingStrategies
-      DerivingVia
-      DuplicateRecordFields
-      EmptyCase
-      FlexibleContexts
-      FlexibleInstances
-      GADTs
-      GeneralizedNewtypeDeriving
-      HexFloatLiterals
-      InstanceSigs
-      ImportQualifiedPost
-      KindSignatures
-      LambdaCase
-      MultiParamTypeClasses
-      NumericUnderscores
-      OverloadedStrings
-      ScopedTypeVariables
-      StandaloneDeriving
-      TupleSections
-      TypeApplications
-      TypeOperators
-      TypeSynonymInstances
-      UndecidableInstances
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  import:         common-lang
+  type:           exitcode-stdio-1.0
+  main-is:        Spec.hs
+  other-modules:  Paths_raytracing
+  hs-source-dirs: test
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+    , base        >=4.7 && <5
     , bytestring
     , conduit
+    , massiv
     , raytracing
-  default-language: Haskell2010

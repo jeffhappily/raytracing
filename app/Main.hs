@@ -1,12 +1,12 @@
 module Main where
 
-import Color (Color (Color))
 import Conduit
 import Data.ByteString (ByteString)
 import Data.ByteString.Char8 (pack)
 import Data.Conduit.Combinators (intersperse)
 import Data.Kind (Type)
-import Vec3 (V3 (V3))
+import System.IO (stdout)
+import Vec3 (Color (Color), V3 (V3), toPpm)
 import Prelude hiding (concatMap)
 
 calcPixel ::
@@ -17,6 +17,7 @@ calcPixel i j width height =
       b = 0.25
    in Color $ V3 r g b
 
+-- Takes an image width and height and returns a string containing the PPM body
 content ::
   forall (m :: Type -> Type) (a :: Type).
   Monad m =>
@@ -29,9 +30,11 @@ content imgWidth imgHeight =
     | j <- [imgHeight -1, imgHeight -2 .. 0]
     , i <- [0 .. imgWidth -1]
     ]
-    .| mapC show
+    .| mapC toPpm
     .| mapC pack
 
+-- Takes an image width and height and returns a string containing the PPM
+-- header and the image data.
 p3 ::
   forall (m :: Type -> Type) (a :: Type).
   Monad m =>
@@ -56,4 +59,6 @@ main = do
   let imgHeight = 256
   runConduitRes $
     p3 imgWidth imgHeight
-      .| sinkFileBS "test.ppm"
+      .| sinkHandle stdout
+
+-- .| sinkFileBS "test.ppm"

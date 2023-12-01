@@ -1,0 +1,3 @@
+packages: raytracing.cabal
+constraints: primitive ==0.8.*,
+             template-haskell ==2.19.*
